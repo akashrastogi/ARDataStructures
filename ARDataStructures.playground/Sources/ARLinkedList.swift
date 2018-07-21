@@ -17,6 +17,12 @@ public class Node<T> {
     }
 }
 
+extension Node: CustomStringConvertible {
+    public var description: String {
+        return "Node value- " + "\(value)"
+    }
+}
+
 
 public class ARLinkedList<T>{
     
@@ -59,7 +65,7 @@ public class ARLinkedList<T>{
             var count = 0// index of node we are currently looking at
             while current != nil {
                 if count == index {
-                    return current?.value as? Node<T>
+                    return current
                 }
                 count = count + 1
                 current = current?.next
@@ -91,18 +97,18 @@ public class ARLinkedList<T>{
         }
         
         /*
-        if let prev = prev { //since previous node exists, not a first node
-            prev.next = next
-        }
-        else { //removing first node
-            head = next
-        }
-        next?.previous = prev
-        
-        if next == nil { //removing last node
-            tail = prev
-        }
-        */
+         if let prev = prev { //since previous node exists, not a first node
+         prev.next = next
+         }
+         else { //removing first node
+         head = next
+         }
+         next?.previous = prev
+         
+         if next == nil { //removing last node
+         tail = prev
+         }
+         */
         
         //Assign nil to the removed nodes previous and next pointers sothat can be removed from memory
         node.previous = nil
@@ -118,12 +124,16 @@ extension ARLinkedList: CustomStringConvertible {
         let topDivider = "---Linked List---\n"
         let bottomDivider = "\n-----------\n"
         
-        var strElement = ""
+        var strElement = "["
         var node = head
         while node != nil {
-            strElement = "\(String(describing: node?.value))"
+            strElement += "\(node!.value)"
             node = node?.next
+            if node != nil {
+                strElement += ", "
+            }
         }
+        strElement += "]"
         
         return topDivider + strElement + bottomDivider
     }
