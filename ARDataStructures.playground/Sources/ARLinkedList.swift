@@ -89,6 +89,7 @@ public class ARLinkedList<T>{
             head = next
         }
         else if next == nil { //removing last node
+            prev?.next = nil
             tail = prev
         }
         else { //removing node from middle
