@@ -35,3 +35,24 @@ print("person queue after dequeue")
 print(personQueue.description)
 
 
+//Linked List example
+//Train is a classic example of Linked List
+//Music player is example of Double linked list
+let playerList = ARLinkedList<String>()
+print("Is player list empty- \(playerList.isEmpty)")
+playerList.append(value: "Song 1")
+playerList.append(value: "Song 2")
+playerList.append(value: "Song 3")
+playerList.append(value: "Song 4")
+print(playerList.description)
+if let secondNode = playerList.nodeAt(index: 2) {
+    print("Second Node-> \(secondNode)")
+    playerList.remove(node: secondNode)
+    print("Linked list after removed node at index-2")
+    print(playerList.description)
+}
+playerList.removeAll()
+print("Remove all songs from player list")
+print(playerList.description)
+
+
