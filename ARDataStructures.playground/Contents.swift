@@ -56,3 +56,21 @@ print("Remove all songs from player list")
 print(playerList.description)
 
 
+//Tree example
+var tree = ARTreeNode<Int>(value: 10)
+tree.addChild(childValue: 20)
+tree.addChild(childValue: 30)
+tree.addChild(childValue: 40)
+var treeNode = ARTreeNode<Int>(value: 100)
+treeNode.addChild(childValue: 200)
+treeNode.addChild(childValue: 300)
+treeNode.addChild(childValue: 400)
+tree.addChildNode(node: treeNode)
+print(tree)
+var searchValue = 20
+print("Node for \(searchValue) -> \(tree.search(searchValue))")
+searchValue = 800
+print("Node for \(searchValue) -> \(tree.search(searchValue))")
+searchValue = 300
+print("Node for \(searchValue) -> \(tree.search(searchValue))")
+
