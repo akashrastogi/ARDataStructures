@@ -8,19 +8,23 @@
 import Foundation
 
 //MARK: Stack implementation in swift
-struct ARStack<T> {
+public struct ARStack<T> {
     fileprivate var array: [T] = []
     
-    mutating func push(_ element: T){
+    public mutating func push(_ element: T){
         array.append(element)
     }
     
-    mutating func pop() -> T?{
+    public mutating func pop() -> T?{
         return array.popLast()
     }
     
-    func peek() -> T?{
+    public func peek() -> T?{
         return array.last
+    }
+    
+    public init() {
+        
     }
 }
 
