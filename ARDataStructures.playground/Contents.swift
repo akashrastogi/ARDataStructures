@@ -74,3 +74,24 @@ print("Node for \(searchValue) -> \(tree.search(searchValue))")
 searchValue = 300
 print("Node for \(searchValue) -> \(tree.search(searchValue))")
 
+
+//Graph Example
+var graph = Graph<Int>()
+graph.addVertex(data: 1)
+graph.addVertex(data: 2)
+graph.addEdge(type: .directed, from: 1, to: 2, weight: 10)
+graph.addEdge(type: .directed, from: 3, to: 4, weight: 30)
+graph.addEdge(type: .directed, from: 2, to: 1, weight: 10)
+graph.addEdge(type: .undirected, from: 6, to: 7, weight: 70)
+graph.addEdge(type: .undirected, from: 6, to: 9, weight: 80)
+graph.addEdge(type: .undirected, from: 7, to: 9, weight: 50)
+graph.addEdge(type: .undirected, from: 7, to: 11, weight: 60)
+graph.addEdge(type: .undirected, from: 8, to: 9, weight: 90)
+graph.addEdge(type: .undirected, from: 10, to: 11, weight: 110)
+graph.edges(from: 1)
+graph.edges(from: 6)
+graph.weight(from: 1, to: 2)
+graph.weight(from: 6, to: 7)
+graph.weight(from: 6, to: 11)
+print(graph.description)
+
