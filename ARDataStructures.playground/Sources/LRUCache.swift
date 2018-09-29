@@ -9,9 +9,9 @@ import Foundation
 
 public class LRUCache<KeyType: Hashable> {
     private let maxSize: Int
-    private var cache:[KeyType: Any] = [:]
-    private var priority: DoublyLinkedList<KeyType> = DoublyLinkedList<KeyType>()
-    private var key2node: [KeyType: Node<KeyType>] = [:]
+    private var dictCache:[KeyType: Any] = [:]
+    private var priorityList: DoublyLinkedList<KeyType> = DoublyLinkedList<KeyType>()
+    private var dictKey2Node: [KeyType: Node<KeyType>] = [:]
     
     public init?(_ maxSize: Int) {
         if maxSize <= 0 { return nil }
@@ -19,7 +19,7 @@ public class LRUCache<KeyType: Hashable> {
     }
     
     public func get(_ key: KeyType) -> Any? {
-        guard let val = cache[key] else {
+        guard let val = dictCache[key] else {
             return nil
         }
         
@@ -30,9 +30,9 @@ public class LRUCache<KeyType: Hashable> {
     }
     
     public func set(_ key: KeyType, val: Any) {
-        if cache[key] != nil {
+        if dictCache[key] != nil {
             remove(key)
-        } else if priority.count >= maxSize, let keyToRemove = priority.last?.value {
+        } else if priorityList.count >= maxSize, let keyToRemove = priorityList.last?.value {
             remove(keyToRemove)
         }
         
@@ -40,20 +40,20 @@ public class LRUCache<KeyType: Hashable> {
     }
     
     private func remove(_ key: KeyType) {
-        cache.removeValue(forKey: key)
-        guard let node = key2node[key] else {
+        dictCache.removeValue(forKey: key)
+        guard let node = dictKey2Node[key] else {
             return
         }
-        let _ = priority.remove(node: node)
-        key2node.removeValue(forKey: key)
+        let _ = priorityList.remove(node: node)
+        dictKey2Node.removeValue(forKey: key)
     }
     
     private func insert(_ key: KeyType, val: Any) {
-        cache[key] = val
-        priority.insert(key, at: 0)
-        guard let first = priority.first else {
+        dictCache[key] = val
+        priorityList.insert(key, at: 0)
+        guard let first = priorityList.first else {
             return
         }
-        key2node[key] = first
+        dictKey2Node[key] = first
     }
 }
