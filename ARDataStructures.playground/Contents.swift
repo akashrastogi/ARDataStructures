@@ -38,6 +38,17 @@ print(personQueue.description)
 //Linked List example
 //Train is a classic example of Linked List
 //Music player is example of Double linked list
+let list = SinglyLinkedList<Int>()
+list.append(value: 0)
+list.append(value: 1)
+list.append(value: 2)
+list.append(value: 4)
+list.append(value: 5)
+list.append(value: 6)
+list.insert(3, at: 3)
+print(list)
+print("Node at index-3 is \(String(describing: list.nodeAt(index: 3)))")
+
 let playerList = DoublyLinkedList<String>()
 print("Is player list empty- \(playerList.isEmpty)")
 playerList.append(value: "Song 1")
@@ -68,9 +79,9 @@ treeNode.addChild(childValue: 400)
 tree.addChildNode(node: treeNode)
 print(tree)
 var searchValue = 20
-print("Node for \(searchValue) -> \(tree.search(searchValue))")
+print("Node for \(searchValue) -> \(String(describing: tree.search(searchValue)))")
 searchValue = 800
-print("Node for \(searchValue) -> \(tree.search(searchValue))")
+print("Node for \(searchValue) -> \(String(describing: tree.search(searchValue)))")
 searchValue = 300
 print("Node for \(searchValue) -> \(tree.search(searchValue))")
 

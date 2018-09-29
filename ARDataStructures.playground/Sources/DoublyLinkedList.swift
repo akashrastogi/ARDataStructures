@@ -8,23 +8,23 @@
 import Foundation
 
 /// Typealiasing the node class to increase readability of code
-public typealias Node<T> = DoublyLinkedList<T>.LinkedListNode<T>
+public typealias DoublyLinkedListNode<T> = DoublyLinkedList<T>.DNode<T>
 
 public final class DoublyLinkedList<T>{
     
     /// Linked List's Node Class Declaration
-    public class LinkedListNode<T> {
+    public class DNode<T> {
         var value:T
-        var next: LinkedListNode<T>?
-        weak var previous: LinkedListNode<T>?
+        var next: DNode<T>?
+        weak var previous: DNode<T>?
         
         public init(value:T) {
             self.value = value
         }
     }
     
-    fileprivate var head: Node<T>?
-    fileprivate var tail: Node<T>?
+    fileprivate var head: DoublyLinkedListNode<T>?
+    fileprivate var tail: DoublyLinkedListNode<T>?
     
     public init() { }
     
@@ -32,11 +32,11 @@ public final class DoublyLinkedList<T>{
         return head == nil
     }
     
-    public var first: Node<T>?{
+    public var first: DoublyLinkedListNode<T>?{
         return head
     }
     
-    public var last: Node<T>?{
+    public var last: DoublyLinkedListNode<T>?{
         return tail
     }
     
@@ -56,7 +56,7 @@ public final class DoublyLinkedList<T>{
     
     public func append(value: T){
         //Create a new node
-        let newNode = Node(value: value)
+        let newNode = DoublyLinkedListNode(value: value)
         if let tailNode = tail { //tail is not empty
             newNode.previous = tailNode //update previous node of newly created node
             tailNode.next = newNode //update next node of last tail
@@ -70,7 +70,7 @@ public final class DoublyLinkedList<T>{
     
     public func insert(_ value: T, at index: Int) {
         //Create a new node
-        let newNode = Node(value: value)
+        let newNode = DoublyLinkedListNode(value: value)
         if index == 0 {
             newNode.next = head
             head?.previous = newNode
@@ -98,7 +98,7 @@ public final class DoublyLinkedList<T>{
         }
     }
     
-    public func nodeAt(index: Int) -> Node<T>?{
+    public func nodeAt(index: Int) -> DoublyLinkedListNode<T>?{
         if index >= 0 {
             var current = head
             var count = 0// index of node we are currently looking at
@@ -119,7 +119,7 @@ public final class DoublyLinkedList<T>{
         tail = nil
     }
     
-    public func remove(node: Node<T>) -> T{
+    public func remove(node: DoublyLinkedListNode<T>) -> T{
         
         let prev = node.previous
         let next = node.next
@@ -150,7 +150,7 @@ public final class DoublyLinkedList<T>{
 extension DoublyLinkedList: CustomStringConvertible {
     public var description: String {
         
-        let topDivider = "---Linked List---\n"
+        let topDivider = "---Doubly Linked List---\n"
         let bottomDivider = "\n-----------\n"
         
         var strElement = "["
@@ -169,7 +169,7 @@ extension DoublyLinkedList: CustomStringConvertible {
     
 }
 
-extension DoublyLinkedList.LinkedListNode: CustomStringConvertible {
+extension DoublyLinkedListNode: CustomStringConvertible {
     public var description: String {
         return "Node value- " + "\(value)"
     }

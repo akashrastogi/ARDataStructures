@@ -11,7 +11,7 @@ public class LRUCache<KeyType: Hashable> {
     private let maxSize: Int
     private var dictCache:[KeyType: Any] = [:]
     private var priorityList: DoublyLinkedList<KeyType> = DoublyLinkedList<KeyType>()
-    private var dictKey2Node: [KeyType: Node<KeyType>] = [:]
+    private var dictKey2Node: [KeyType: DoublyLinkedListNode<KeyType>] = [:]
     
     public init?(_ maxSize: Int) {
         if maxSize <= 0 { return nil }
