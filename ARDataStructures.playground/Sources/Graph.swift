@@ -1,5 +1,5 @@
 //
-//  ARGraph.swift
+//  Graph.swift
 //  ARDataStructures
 //
 //  Created by Akash Rastogi on 21/07/18.
@@ -10,8 +10,8 @@ import Foundation
 
 //MARK: Vertex implementation
 public struct Vertex<T: Hashable> {
-    let data:T
-    init(data: T) {
+    public let data:T
+    public init(data: T) {
         self.data = data
     }
 }
@@ -89,7 +89,7 @@ public class Graph<T: Hashable> {
         return vertex
     }
     
-    public func addEdge(type: EdgeType, from source: T, to destination: T, weight: Double?) {
+    public func addEdge(type: EdgeType, from source: T, to destination: T, weight: Double?=nil) {
         let sourceVetrex = Vertex<T>(data: source)
         if adjacencyDict[sourceVetrex] == nil {
             adjacencyDict[sourceVetrex] = []
@@ -156,6 +156,78 @@ extension Graph where T:CustomStringConvertible {
             result.append("\(vertex) ---> [ \(edgeString) ] \n ")
         }
         return result
+    }
+}
+
+//MARK: BFS- Breadth First Search
+enum Visit<T: Hashable> {
+    case source
+    case edge(Edge<T>)
+}
+
+extension Graph {
+    public func breadthFirstSearch(from source: Vertex<T>, to destination: Vertex<T>) -> [Edge<T>]? {
+        var queue = Queue<Vertex<T>>()
+        queue.enqueue(source)
+        var visits : [Vertex<T> : Visit<T>] = [source: .source] // 1
+        
+        while let visitedVertex = queue.dequeue() {
+            if visitedVertex == destination {
+                var vertex = destination // 1
+                var route : [Edge<T>] = [] // 2
+                
+                while let visit = visits[vertex],
+                    case .edge(let edge) = visit { // 3
+                        
+                        route = [edge] + route
+                        vertex = edge.source // 4
+                        
+                }
+                return route // 5
+            }
+            let neighbourEdges = edges(from: visitedVertex.data) ?? []
+            for edge in neighbourEdges {
+                if visits[edge.destination] == nil { // 2
+                    queue.enqueue(edge.destination)
+                    visits[edge.destination] = .edge(edge) // 3
+                }
+            }
+        }
+        return nil
+    }
+}
+
+//MARK: DFS- Depth First Search
+extension Graph {
+    
+    public func depthFirstSearch(from start: Vertex<T>, to end: Vertex<T>) -> Stack<Vertex<T>> {
+        var visited = Set<Vertex<T>>()
+        var stack = Stack<Vertex<T>>()
+        
+        stack.push(start)
+        visited.insert(start)
+        
+        outer: while let vertex = stack.peek(), vertex != end {
+            
+            guard let neighbours = edges(from: vertex.data), neighbours.count > 0 else {
+//                print("backtrack from \(vertex)")
+                let _ = stack.pop()
+                continue
+            }
+            
+            for edge in neighbours {
+                if !visited.contains(edge.destination) {
+                    visited.insert(edge.destination)
+                    stack.push(edge.destination)
+                    continue outer
+                }
+            }
+            
+//            print("backtrack from \(vertex)")
+            let _ = stack.pop()
+            
+        }
+        return stack
     }
 }
 

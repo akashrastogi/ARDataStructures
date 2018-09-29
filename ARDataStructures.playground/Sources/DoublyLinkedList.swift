@@ -1,5 +1,5 @@
 //
-//  ARLinkedList.swift
+//  DoublyLinkedList.swift
 //  ARDataStructures
 //
 //  Created by Akash Rastogi on 16/07/18.
@@ -7,31 +7,26 @@
 
 import Foundation
 
-public class Node<T> {
-    var value:T
-    var next: Node<T>?
-    weak var previous: Node<T>?
+/// Typealiasing the node class to increase readability of code
+public typealias Node<T> = DoublyLinkedList<T>.LinkedListNode<T>
+
+public final class DoublyLinkedList<T>{
     
-    public init(value:T) {
-        self.value = value
+    /// Linked List's Node Class Declaration
+    public class LinkedListNode<T> {
+        var value:T
+        var next: LinkedListNode<T>?
+        weak var previous: LinkedListNode<T>?
+        
+        public init(value:T) {
+            self.value = value
+        }
     }
-}
-
-extension Node: CustomStringConvertible {
-    public var description: String {
-        return "Node value- " + "\(value)"
-    }
-}
-
-
-public class ARLinkedList<T>{
     
     fileprivate var head: Node<T>?
     fileprivate var tail: Node<T>?
     
-    public init() {
-        
-    }
+    public init() { }
     
     public var isEmpty: Bool {
         return head == nil
@@ -43,6 +38,20 @@ public class ARLinkedList<T>{
     
     public var last: Node<T>?{
         return tail
+    }
+    
+    /// Computed property to iterate through the linked list and return the total number of nodes
+    public var count: Int {
+        guard var node = head else {
+            return 0
+        }
+        
+        var count = 1
+        while let next = node.next {
+            node = next
+            count += 1
+        }
+        return count
     }
     
     public func append(value: T){
@@ -57,6 +66,36 @@ public class ARLinkedList<T>{
         }
         
         tail = newNode //update tail
+    }
+    
+    public func insert(_ value: T, at index: Int) {
+        //Create a new node
+        let newNode = Node(value: value)
+        if index == 0 {
+            newNode.next = head
+            head?.previous = newNode
+            head = newNode
+            
+            if tail == nil {
+                var lastNode = head
+                while lastNode?.next != nil {
+                    lastNode = lastNode?.next
+                }
+                tail = lastNode
+            }
+        }
+        else if index <= count {
+            let prev = nodeAt(index: index - 1)
+            let isPreviousNodeTail = prev?.next == nil
+            let next = prev?.next
+            newNode.previous = prev
+            newNode.next = next
+            next?.previous = newNode
+            prev?.next = newNode
+            if isPreviousNodeTail {
+                tail = newNode
+            }
+        }
     }
     
     public func nodeAt(index: Int) -> Node<T>?{
@@ -87,6 +126,9 @@ public class ARLinkedList<T>{
         
         if prev == nil { //removing first node
             head = next
+            if head == nil { //Reset tail dangling pointer, if exist
+                tail = nil
+            }
         }
         else if next == nil { //removing last node
             prev?.next = nil
@@ -97,20 +139,6 @@ public class ARLinkedList<T>{
             next?.previous = prev
         }
         
-        /*
-         if let prev = prev { //since previous node exists, not a first node
-         prev.next = next
-         }
-         else { //removing first node
-         head = next
-         }
-         next?.previous = prev
-         
-         if next == nil { //removing last node
-         tail = prev
-         }
-         */
-        
         //Assign nil to the removed nodes previous and next pointers sothat can be removed from memory
         node.previous = nil
         node.next = nil
@@ -119,7 +147,7 @@ public class ARLinkedList<T>{
     }
 }
 
-extension ARLinkedList: CustomStringConvertible {
+extension DoublyLinkedList: CustomStringConvertible {
     public var description: String {
         
         let topDivider = "---Linked List---\n"
@@ -139,4 +167,10 @@ extension ARLinkedList: CustomStringConvertible {
         return topDivider + strElement + bottomDivider
     }
     
+}
+
+extension DoublyLinkedList.LinkedListNode: CustomStringConvertible {
+    public var description: String {
+        return "Node value- " + "\(value)"
+    }
 }

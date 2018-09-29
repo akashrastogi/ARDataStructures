@@ -1,5 +1,5 @@
 //
-//  ARStack.swift
+//  Queue.swift
 //  ARDataStructures
 //
 //  Created by Akash Rastogi on 16/07/18.
@@ -7,20 +7,30 @@
 
 import Foundation
 
-//MARK: Stack implementation in swift
-public struct ARStack<T> {
-    fileprivate var array: [T] = []
+//MARK: Queue implementation in swift
+public struct Queue<T> {
     
-    public mutating func push(_ element: T){
+    fileprivate var array = [T]()
+    
+    public mutating func enqueue(_ element: T){
         array.append(element)
     }
     
-    public mutating func pop() -> T?{
-        return array.popLast()
+    public mutating func dequeue() -> T?{
+        if array.isEmpty == false     {
+            return array.removeFirst()
+        }
+        else {
+            return nil
+        }
     }
     
     public func peek() -> T?{
-        return array.last
+        return array.first
+    }
+    
+    public var isEmpty: Bool {
+        return array.isEmpty
     }
     
     public init() {
@@ -28,13 +38,12 @@ public struct ARStack<T> {
     }
 }
 
-
 //MARK: Description method
-extension ARStack: CustomStringConvertible {
+extension Queue: CustomStringConvertible {
     
     public var description: String {
         
-        let topDivider = "---Stack---\n"
+        let topDivider = "---Queue---\n"
         let bottomDivider = "\n-----------\n"
         
         var strElement = ""
@@ -43,7 +52,7 @@ extension ARStack: CustomStringConvertible {
             strElement.append("\(element)")
             strElement.append("\n")
         }
-
+                
         return topDivider + strElement + bottomDivider
     }
 }

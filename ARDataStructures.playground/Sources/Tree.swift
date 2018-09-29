@@ -1,5 +1,5 @@
 //
-//  ARTree.swift
+//  Tree.swift
 //  ARDataStructures
 //
 //  Created by Akash Rastogi on 17/07/18.
@@ -7,30 +7,30 @@
 
 import Foundation
 
-public class ARTreeNode<T> {
+public class TreeNode<T> {
     public let value: T
     
-    private(set) public weak var parent: ARTreeNode<T>?
-    private(set) public var children = [ARTreeNode<T>]()
+    private(set) public weak var parent: TreeNode<T>?
+    private(set) public var children = [TreeNode<T>]()
     
     public init(value: T) {
         self.value = value
     }
     
     public func addChild(childValue: T) {
-        let node = ARTreeNode<T>(value: childValue)
+        let node = TreeNode<T>(value: childValue)
         addChildNode(node:node)
     }
     
-    public func addChildNode(node:ARTreeNode<T>) {
+    public func addChildNode(node:TreeNode<T>) {
         node.parent = self
         self.children.append(node)
     }
 }
 
-extension ARTreeNode where T: Equatable {
+extension TreeNode where T: Equatable {
     
-    public func search(_ value: T) -> ARTreeNode? {
+    public func search(_ value: T) -> TreeNode? {
         
         if value == self.value {
             return self
@@ -44,7 +44,7 @@ extension ARTreeNode where T: Equatable {
     }
 }
 
-extension ARTreeNode: CustomStringConvertible {
+extension TreeNode: CustomStringConvertible {
     public var description: String {
         var s = "\(value)"
         if !children.isEmpty {

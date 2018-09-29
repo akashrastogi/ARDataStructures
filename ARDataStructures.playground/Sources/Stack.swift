@@ -1,5 +1,5 @@
 //
-//  ARQueue.swift
+//  Stack.swift
 //  ARDataStructures
 //
 //  Created by Akash Rastogi on 16/07/18.
@@ -7,30 +7,20 @@
 
 import Foundation
 
-//MARK: Queue implementation in swift
-public struct ARQueue<T> {
+//MARK: Stack implementation in swift
+public struct Stack<T> {
+    fileprivate var array: [T] = []
     
-    fileprivate var array = [T]()
-    
-    public mutating func enqueue(_ element: T){
+    public mutating func push(_ element: T){
         array.append(element)
     }
     
-    public mutating func dequeue() -> T?{
-        if array.isEmpty == false     {
-            return array.removeFirst()
-        }
-        else {
-            return nil
-        }
+    public mutating func pop() -> T?{
+        return array.popLast()
     }
     
     public func peek() -> T?{
-        return array.first
-    }
-    
-    public var isEmpty: Bool {
-        return array.isEmpty
+        return array.last
     }
     
     public init() {
@@ -38,12 +28,13 @@ public struct ARQueue<T> {
     }
 }
 
+
 //MARK: Description method
-extension ARQueue: CustomStringConvertible {
+extension Stack: CustomStringConvertible {
     
     public var description: String {
         
-        let topDivider = "---Queue---\n"
+        let topDivider = "---Stack---\n"
         let bottomDivider = "\n-----------\n"
         
         var strElement = ""
@@ -52,7 +43,7 @@ extension ARQueue: CustomStringConvertible {
             strElement.append("\(element)")
             strElement.append("\n")
         }
-                
+
         return topDivider + strElement + bottomDivider
     }
 }

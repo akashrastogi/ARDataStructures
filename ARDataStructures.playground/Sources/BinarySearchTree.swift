@@ -1,5 +1,5 @@
 //
-//  ARBinarySearchTree.swift
+//  BinarySearchTree.swift
 //  ARDataStructures
 //
 //  Created by Akash Rastogi on 18/07/18.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-public class ARBinarySearchTree<T: Comparable> {
+public class BinarySearchTree<T: Comparable> {
     private(set) public var value: T
-    private(set) public var parent: ARBinarySearchTree?
-    private(set) public var left: ARBinarySearchTree?
-    private(set) public var right: ARBinarySearchTree?
+    private(set) public var parent: BinarySearchTree?
+    private(set) public var left: BinarySearchTree?
+    private(set) public var right: BinarySearchTree?
     
     public var isRoot: Bool {
         return parent == nil
@@ -69,7 +69,7 @@ public class ARBinarySearchTree<T: Comparable> {
                 left.insert(value: value)
             }
             else { //left doesn't exist, create a new one
-                left = ARBinarySearchTree(value: value)
+                left = BinarySearchTree(value: value)
                 left?.parent = self
             }
             
@@ -80,7 +80,7 @@ public class ARBinarySearchTree<T: Comparable> {
                 right.insert(value: value)
             }
             else { //right doesn't exist, create a new one
-                right = ARBinarySearchTree(value: value)
+                right = BinarySearchTree(value: value)
                 right?.parent = self
             }
             
@@ -88,7 +88,7 @@ public class ARBinarySearchTree<T: Comparable> {
     }
     
     //Search specific node
-    public func search(value: T) -> ARBinarySearchTree? {
+    public func search(value: T) -> BinarySearchTree? {
         if value < self.value {
             return left?.search(value: value)
         }
@@ -101,7 +101,7 @@ public class ARBinarySearchTree<T: Comparable> {
     }
     
     //Deletion of node
-    public func remove(value:T) -> ARBinarySearchTree? {
+    public func remove(value:T) -> BinarySearchTree? {
         
         if let searchNode = self.search(value: value) {
             
@@ -164,7 +164,7 @@ public class ARBinarySearchTree<T: Comparable> {
     }
     
     //Predecessor: Finds the node whose value precedes our value in sorted order.
-    public func predecessor() -> ARBinarySearchTree<T>? {
+    public func predecessor() -> BinarySearchTree<T>? {
         if let left = left {
             return left.maximum()
         }
@@ -181,7 +181,7 @@ public class ARBinarySearchTree<T: Comparable> {
     }
     
     //Successor: Finds the node whose value succeeds our value in sorted order.
-    public func successor() -> ARBinarySearchTree<T>? {
+    public func successor() -> BinarySearchTree<T>? {
         if let right = right {
             return right.minimum()
         }
@@ -201,7 +201,7 @@ public class ARBinarySearchTree<T: Comparable> {
     
     //TODO: Traversal
     
-    public func minimum() -> ARBinarySearchTree {
+    public func minimum() -> BinarySearchTree {
         var node = self
         while let left = node.left {
             node = left
@@ -209,7 +209,7 @@ public class ARBinarySearchTree<T: Comparable> {
         return node
     }
     
-    public func maximum() -> ARBinarySearchTree {
+    public func maximum() -> BinarySearchTree {
         var node = self
         while let right = node.right {
             node = right
@@ -219,7 +219,7 @@ public class ARBinarySearchTree<T: Comparable> {
     
 }
 
-extension ARBinarySearchTree: CustomStringConvertible {
+extension BinarySearchTree: CustomStringConvertible {
     public var description: String {
         var s = ""
         if let left = left {
