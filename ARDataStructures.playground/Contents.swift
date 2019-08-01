@@ -176,3 +176,9 @@ print(cache?.get(1))//nil
 print(cache?.get(2))//nil
 print(cache?.get(3))//3
 print(cache?.get(4))//4
+
+var hashTable = HashTable<String, String>.init(capacity: 3)
+hashTable["firstName"] = "akash"
+hashTable["lastName"] = "rastogi"
+hashTable["city"] = "gurgaon"
+print(hashTable["firstName"])
